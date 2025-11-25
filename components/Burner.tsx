@@ -12,7 +12,7 @@ const Burner: React.FC<BurnerProps> = ({ lit, onClick }) => {
   useCursor(hovered && !lit);
 
   return (
-    <group position={[0, -0.8, 1.5]}>
+    <group position={[0, -2.5, 1.5]}>
       <mesh
         castShadow
         onClick={(e) => {
