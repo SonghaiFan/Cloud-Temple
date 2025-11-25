@@ -40,7 +40,7 @@ const ParallaxBuddha: React.FC = () => {
           mat.emissive = new THREE.Color("#a67c24");
           mat.emissiveIntensity = 0.4;
           mat.metalness = 0.1;
-          mat.roughness = 0.6;
+          mat.roughness = 0.2;
           mat.transparent = false;
           mat.depthWrite = true;
           child.material = mat;
@@ -75,6 +75,6 @@ const ParallaxBuddha: React.FC = () => {
   );
 };
 
-useGLTF.preload(`${import.meta.env.BASE_URL}buddha.glb`);
+useGLTF.preload(`${import.meta.env.BASE_URL}sit_luminous_buddha.glb`);
 
 export default ParallaxBuddha;
