@@ -1,10 +1,9 @@
-import React, { useState, Suspense, useEffect } from 'react';
+import React, { useState, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Sparkles, Html } from '@react-three/drei';
+import { Sparkles } from '@react-three/drei';
 import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
 import { audioService } from '../services/audioService';
-import { generateBlessing, generateBuddhaImage } from '../services/geminiService';
-import { storageService } from '../services/storageService';
+import { generateBlessing } from '../services/blessingService';
 import { SoundType } from '../types';
 import FloatingText from './FloatingText';
 
@@ -23,14 +22,12 @@ const Scene = ({
   incenseLit, 
   onLightIncense, 
   onWoodfish, 
-  onBell,
-  buddhaImage
+  onBell
 }: { 
   incenseLit: boolean, 
   onLightIncense: () => void, 
   onWoodfish: (e: any) => void, 
-  onBell: (e: any) => void,
-  buddhaImage: string | null
+  onBell: (e: any) => void
 }) => {
   return (
     <>
@@ -47,7 +44,7 @@ const Scene = ({
       {/* --- Parallax Layers --- */}
       <SacredHalo />
       
-      {buddhaImage && <ParallaxBuddha imageUrl={buddhaImage} />}
+      <ParallaxBuddha />
 
       {/* Layer 3: Particles (Mid-Front) */}
       <Sparkles 
@@ -80,65 +77,10 @@ const MainHall: React.FC<MainHallProps> = ({ onBack }) => {
   const [incenseLit, setIncenseLit] = useState(false);
   const [merit, setMerit] = useState(0);
   const [floatingTexts, setFloatingTexts] = useState<{id: number, x: number, y: number, text: string}[]>([]);
-  const [viewState, setViewState] = useState<'idle' | 'praying' | 'result' | 'generating'>('idle');
+  const [viewState, setViewState] = useState<'idle' | 'praying' | 'result'>('idle');
   const [wish, setWish] = useState('');
   const [blessing, setBlessing] = useState('');
   const [loading, setLoading] = useState(false);
-  
-  // Image State
-  const [buddhaImage, setBuddhaImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Load image from storage on mount
-    const savedImage = storageService.getImage();
-    if (savedImage) {
-      setBuddhaImage(savedImage);
-    }
-  }, []);
-
-  const handleGenerateBuddha = async () => {
-    // Proactive check for AI Studio Key Selection
-    if (window.aistudio) {
-      try {
-        const hasKey = await window.aistudio.hasSelectedApiKey();
-        if (!hasKey) {
-          await window.aistudio.openSelectKey();
-        }
-      } catch (err) {
-        console.warn("AI Studio bridge error", err);
-      }
-    }
-
-    setViewState('generating');
-    try {
-      const img = await generateBuddhaImage();
-      if (img) {
-        setBuddhaImage(img);
-        storageService.saveImage(img);
-        triggerFloatingText('金身已塑 功德无量');
-      }
-    } catch (e: any) {
-      console.error(e);
-      // Reactive check for 403/Permission errors
-      const errStr = JSON.stringify(e) + String(e);
-      const isForbidden = errStr.includes('403') || errStr.includes('PERMISSION_DENIED');
-
-      if (isForbidden) {
-         triggerFloatingText('需付费API权限');
-         if (window.aistudio) {
-            try {
-               await window.aistudio.openSelectKey();
-            } catch (kErr) {
-               console.error(kErr);
-            }
-         }
-      } else {
-         triggerFloatingText('生成失败 请重试');
-      }
-    } finally {
-      setViewState('idle');
-    }
-  };
 
   const triggerFloatingText = (text: string, x?: number, y?: number) => {
     const newText = {
@@ -191,7 +133,6 @@ const MainHall: React.FC<MainHallProps> = ({ onBack }) => {
               onLightIncense={handleLightIncense}
               onWoodfish={handleWoodfish}
               onBell={handleBell}
-              buddhaImage={buddhaImage}
             />
           </Suspense>
           
@@ -219,29 +160,6 @@ const MainHall: React.FC<MainHallProps> = ({ onBack }) => {
         </div>
       </div>
 
-      {/* Initialize/Generate Button if no image */}
-      {!buddhaImage && viewState === 'idle' && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center z-20">
-           <p className="text-stone-500 font-serif mb-6 tracking-widest">禅坛空空，心诚则灵</p>
-           <button 
-             onClick={handleGenerateBuddha}
-             className="border border-amber-800/50 bg-black/50 text-amber-600 px-6 py-2 hover:bg-amber-900/20 hover:text-amber-200 transition-all uppercase tracking-[0.2em] text-xs backdrop-blur-md"
-           >
-             请佛住世 (Generate Altar)
-           </button>
-        </div>
-      )}
-
-      {/* Loading State for Generation */}
-      {viewState === 'generating' && (
-        <div className="absolute inset-0 flex items-center justify-center z-50 bg-black/80 backdrop-blur-sm">
-           <div className="text-center">
-             <div className="w-16 h-16 border-2 border-amber-900 border-t-amber-500 rounded-full animate-spin mx-auto mb-6"></div>
-             <p className="text-amber-500/80 font-serif tracking-[0.3em] animate-pulse">正在重塑金身...</p>
-           </div>
-        </div>
-      )}
-
       {/* Floating Texts */}
       {floatingTexts.map(ft => (
          <FloatingText 
@@ -254,7 +172,7 @@ const MainHall: React.FC<MainHallProps> = ({ onBack }) => {
       ))}
 
       {/* Prayer Trigger */}
-      {buddhaImage && viewState === 'idle' && (
+      {viewState === 'idle' && (
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10">
            <button 
              onClick={() => setViewState('praying')}
