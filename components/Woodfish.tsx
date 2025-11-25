@@ -64,7 +64,7 @@ const Woodfish: React.FC<WoodfishProps> = ({ onClick }) => {
   return (
     <group
       ref={ref}
-      position={[0.4, -2.4, 1.4]}
+      position={[0.4, -2.5, 1.4]}
       rotation={[0, -0.4, 0]}
       onClick={handleClick}
       onPointerOver={() => setHovered(true)}

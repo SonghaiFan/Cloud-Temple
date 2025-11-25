@@ -37,8 +37,8 @@ const ParallaxBuddha: React.FC = () => {
         if (baseMaterial) {
           const mat = baseMaterial.clone();
           mat.color = new THREE.Color("#f6e8c9");
-          mat.emissive = new THREE.Color("#a67c24");
-          mat.emissiveIntensity = 0.4;
+          mat.emissive = new THREE.Color("#ffe7a0"); // 更亮的金色
+          mat.emissiveIntensity = 1.2; // 增强发光
           mat.metalness = 0.1;
           mat.roughness = 0.2;
           mat.transparent = false;
@@ -67,9 +67,26 @@ const ParallaxBuddha: React.FC = () => {
   });
 
   return (
-    <group ref={group} position={[0, 1.5, -2]}>
+    <group ref={group} position={[0, 3.5, -5]}>
+      {/* 佛像发光：聚光灯和点光源 */}
+      <spotLight
+        position={[0, 5.5, -5]}
+        angle={0.6}
+        penumbra={0.7}
+        intensity={2.2}
+        color="#ffe7a0"
+        distance={10}
+        castShadow
+        target-position={[0, 3.5, -5]}
+      />
+      <pointLight
+        position={[0, 4.5, -5]}
+        intensity={1.2}
+        color="#ffe7a0"
+        distance={6}
+      />
       <Float speed={1.5} rotationIntensity={0.05} floatIntensity={0.2}>
-        <primitive object={model} scale={[2, 2, 2]} />
+        <primitive object={model} scale={[4, 4, 4]} />
       </Float>
     </group>
   );

@@ -30,10 +30,25 @@ const Bell: React.FC<BellProps> = ({ onClick }) => {
     clone.scale.setScalar(uniformScale);
     clone.position.y -= (safeHeight * uniformScale) / 2 - 0.05;
 
+    // 调整铜钟颜色和质感
     clone.traverse((child: any) => {
       if (child.isMesh) {
         child.castShadow = true;
         child.receiveShadow = true;
+        const baseMaterial = Array.isArray(child.material)
+          ? child.material[0]
+          : child.material;
+        if (baseMaterial) {
+          const mat = baseMaterial.clone();
+          mat.color = new THREE.Color("#bfa76a"); // 铜金色
+          mat.metalness = 0.1;
+          mat.roughness = 0.7;
+          mat.emissive = new THREE.Color("#a67c24"); // 微弱金色自发光
+          mat.emissiveIntensity = 0.02;
+          mat.transparent = false;
+          mat.depthWrite = true;
+          child.material = mat;
+        }
       }
     });
 
@@ -64,6 +79,15 @@ const Bell: React.FC<BellProps> = ({ onClick }) => {
 
   return (
     <group position={[-2, 3, -1]}>
+      {/* 铜钟发光：点光源 */}
+      <pointLight
+        position={[1, -0.5, -0.2]}
+        intensity={12}
+        color="#ffe7a0"
+        distance={3}
+        decay={2}
+        castShadow
+      />
       <group
         ref={ref}
         onClick={handleClick}

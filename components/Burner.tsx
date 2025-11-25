@@ -25,7 +25,7 @@ const Burner: React.FC<BurnerProps> = ({ lit, onClick, tipLength = 0.02 }) => {
   const bodyLength = Math.max(0, stickTotalLength - tipLength);
 
   return (
-    <group position={[0, -2.5, 1.5]}>
+    <group position={[0, -2.55, 1.5]}>
       <mesh
         castShadow
         onClick={(e) => {
