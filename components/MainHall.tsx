@@ -38,6 +38,16 @@ const Scene = ({
       
       {/* Lights */}
       <ambientLight intensity={0.2} />
+      <spotLight
+        position={[0, 12, 1.5]}
+        angle={0.35}
+        penumbra={0.6}
+        intensity={3}
+        color="#ffddaa"
+        castShadow
+        distance={20}
+        decay={2}
+      />
       <spotLight position={[0, 10, 5]} angle={0.3} penumbra={1} intensity={2} color="#ffccaa" castShadow />
       <pointLight position={[-5, 2, 0]} intensity={1} color="#0044ff" distance={10} />
       
