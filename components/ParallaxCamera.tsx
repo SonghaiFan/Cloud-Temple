@@ -12,12 +12,12 @@ const ParallaxCamera = () => {
     );
     state.camera.position.y = THREE.MathUtils.lerp(
       state.camera.position.y,
-      0.6 + y * 0.15,
+      -3 + y * 0.15,
       0.02
     );
     state.camera.position.z = THREE.MathUtils.lerp(
       state.camera.position.z,
-      6,
+      4,
       0.02
     );
     state.camera.lookAt(0, 0.1, -1.5);
