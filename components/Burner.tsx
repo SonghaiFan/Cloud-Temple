@@ -82,8 +82,8 @@ const Burner: React.FC<BurnerProps> = ({ lit, onClick, tipLength = 0.02 }) => {
       )}
 
       {!lit && (
-        <Html position={[0, 0.4, 0]} center style={{ pointerEvents: "none" }}>
-          <div className="text-amber-500/80 text-[10px] font-serif border border-amber-500/30 px-2 py-0.5 rounded bg-black/50 backdrop-blur whitespace-nowrap animate-float">
+        <Html position={[0, 0.1, 0]} center style={{ pointerEvents: "none" }}>
+          <div className="text-amber-500/80 text-[15px] font-serif border border-amber-500/30 px-2 py-0.5 rounded bg-black/50 backdrop-blur whitespace-nowrap animate-float">
             点击上香
           </div>
         </Html>

@@ -72,12 +72,12 @@ const Woodfish: React.FC<WoodfishProps> = ({ onClick }) => {
     >
       <primitive object={woodfishModel} />
       <Html
-        position={[0, -0.2, 0]}
+        position={[0, 0, 0]}
         center
         style={{ pointerEvents: "none", opacity: hovered ? 1 : 0.5 }}
         className="transition-opacity"
       >
-        <div className="text-stone-400 text-[10px] font-serif tracking-widest">
+        <div className="text-stone-400 text-[15px] font-serif tracking-widest">
           木鱼
         </div>
       </Html>

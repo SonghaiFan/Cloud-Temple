@@ -97,12 +97,12 @@ const Bell: React.FC<BellProps> = ({ onClick }) => {
         <primitive object={bellModel} />
       </group>
       <Html
-        position={[0, -0.4, 0]}
+        position={[0, -2, 0]}
         center
         style={{ pointerEvents: "none", opacity: hovered ? 1 : 0.5 }}
         className="transition-opacity"
       >
-        <div className="text-stone-400 text-[10px] font-serif tracking-widest">
+        <div className="text-stone-400 text-[15px] font-serif tracking-widest">
           铜钟
         </div>
       </Html>
