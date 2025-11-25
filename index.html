@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>云端禅寺 | Cloud Temple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Noto Serif SC"', 'serif'],
+              calligraphy: ['"Ma Shan Zheng"', 'cursive'],
+            },
+            colors: {
+              temple: {
+                gold: '#D4AF37',
+                red: '#8B0000',
+                wood: '#855E42',
+                dark: '#0c0a09',
+                paper: '#Fdfbf7',
+                gray: '#4a4a4a'
+              }
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'fade-in': 'fadeIn 1.5s ease-out forwards',
+              'slow-zoom': 'slowZoom 20s infinite alternate',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slowZoom: {
+                '0%': { transform: 'scale(1)' },
+                '100%': { transform: 'scale(1.1)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background-color: #0c0a09;
+        color: #e5e5e5;
+        overflow: hidden; /* Prevent scroll on 3D canvas */
+      }
+      .woodfish-cursor {
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle></svg>') 12 12, auto;
+      }
+      /* Custom scrollbar for modals */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1c1c1c; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #855E42; 
+        border-radius: 4px;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "three": "https://esm.sh/three@0.160.0",
+    "three/": "https://esm.sh/three@0.160.0/",
+    "three/addons/": "https://esm.sh/three@0.160.0/examples/jsm/",
+    "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.15.16?external=react,react-dom,three",
+    "@react-three/drei": "https://esm.sh/@react-three/drei@9.99.0?external=react,react-dom,three,@react-three/fiber",
+    "postprocessing": "https://esm.sh/postprocessing@6.35.0?external=three",
+    "@react-three/postprocessing": "https://esm.sh/@react-three/postprocessing@2.16.0?external=react,react-dom,three,@react-three/fiber,postprocessing",
+    "maath/random/dist/maath-random.esm": "https://esm.sh/maath@0.10.7/random/dist/maath-random.esm",
+    "uuid": "https://esm.sh/uuid@9.0.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
